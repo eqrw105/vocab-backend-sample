@@ -1,9 +1,12 @@
-val kotlin_version: String by project
-val logback_version: String by project
+import com.diffplug.gradle.spotless.SpotlessExtension
+
+val kotlinVersion: String by project
+val logbackVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.1.10"
     id("io.ktor.plugin") version "3.2.3"
+    id("com.diffplug.spotless") version "7.1.0"
 }
 
 group = "com.nims"
@@ -11,6 +14,17 @@ version = "0.0.1"
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
+}
+
+extensions.configure<SpotlessExtension> {
+    val buildDirectory = layout.buildDirectory.asFileTree
+    kotlin {
+        ktlint("1.7.1")
+        target("**/*.kt", "**/*.kts")
+        targetExclude(buildDirectory)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 dependencies {
