@@ -15,8 +15,6 @@ on:
 jobs:
   build-test-lint:
     runs-on: ubuntu-latest
-    env:
-      PORT: ${{ secrets.PORT }}
 
     steps:
       - name: Checkout
