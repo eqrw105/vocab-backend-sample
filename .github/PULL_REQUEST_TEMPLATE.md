@@ -8,7 +8,7 @@ assignees: []
 ---
 
 ## 관련 이슈
-Fixes #
+- Fixes #
 
 ## 변경 사항
 - 
