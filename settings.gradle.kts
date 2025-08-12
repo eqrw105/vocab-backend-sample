@@ -1,4 +1,4 @@
-rootProject.name = "wedding"
+rootProject.name = "vocab-api"
 
 dependencyResolutionManagement {
     repositories {
