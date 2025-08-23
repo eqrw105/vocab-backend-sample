@@ -6,6 +6,9 @@ ktor = "3.2.3"
 spotless = "7.1.0"
 logback = "1.5.13"
 ktlint = "1.7.1"
+exposed = "1.0.0-beta-5"
+postgresql = "42.7.7"
+kotlinx-datetime = "0.7.1"
 
 [libraries]
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -18,6 +21,12 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation" }
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 [plugins]
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
