@@ -1,6 +1,10 @@
 ktor:
   application:
     modules:
-      - com.nims.ApplicationKt.module
+      - application.ApplicationKt.module
   deployment:
     port: $PORT
+  database:
+    url: $DB_URL
+    user: $DB_USER
+    password: $DB_PASSWORD

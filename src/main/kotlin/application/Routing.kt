@@ -1,4 +1,4 @@
-package com.nims
+package application
 
 import io.ktor.server.application.Application
 
