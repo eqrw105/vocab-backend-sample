@@ -1,5 +1,4 @@
-package application
-
+import application.configureRouting
 import config.configureDatabases
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
