@@ -1,5 +1,6 @@
 package infrastructure.table
 
+import domain.model.session.RefreshToken
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.UUIDTable
 import org.jetbrains.exposed.v1.dao.UUIDEntity
@@ -25,3 +26,13 @@ class RefreshTokenDAO(
     var createdAt by RefreshTokensTable.createdAt
     var updatedAt by RefreshTokensTable.updatedAt
 }
+
+fun RefreshTokenDAO.toRefreshToken(): RefreshToken =
+    RefreshToken(
+        tokenId = id.value,
+        userId = userId,
+        tokenHash = tokenHash,
+        expiresAt = expiresAt,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+    )
