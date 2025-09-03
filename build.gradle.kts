@@ -24,6 +24,15 @@ spotless {
     }
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-opt-in=kotlin.uuid.ExperimentalUuidApi",
+            "-opt-in=kotlin.time.ExperimentalTime",
+        )
+    }
+}
+
 dependencies {
     implementation(libs.ktor.server.core.jvm)
     implementation(libs.ktor.server.netty)
