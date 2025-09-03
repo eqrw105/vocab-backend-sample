@@ -1,5 +1,6 @@
 package plugins.db
 
+import infrastructure.table.RefreshTokensTable
 import infrastructure.table.UsersTable
 import io.ktor.server.application.Application
 import org.jetbrains.exposed.v1.jdbc.Database
@@ -16,6 +17,6 @@ fun Application.configureDatabases() {
         password = password,
     )
     transaction {
-        SchemaUtils.create(UsersTable)
+        SchemaUtils.create(UsersTable, RefreshTokensTable)
     }
 }
