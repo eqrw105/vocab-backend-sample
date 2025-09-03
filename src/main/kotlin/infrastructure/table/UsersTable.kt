@@ -1,8 +1,8 @@
 package infrastructure.table
 
-import domain.model.AuthProvider
-import domain.model.UserStatus
-import domain.model.UserType
+import domain.model.auth.AuthProvider
+import domain.model.user.UserStatus
+import domain.model.user.UserType
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.dao.LongEntity
@@ -12,9 +12,10 @@ import java.time.LocalDateTime
 
 object UsersTable : LongIdTable("users") {
     val email = varchar("email", 255).uniqueIndex().nullable()
-    val username = varchar("username", 50).uniqueIndex().nullable()
+    val name = varchar("name", 50).uniqueIndex().nullable()
     val passwordHash = text("password_hash").nullable()
-    val socialId = varchar("social_id", 255).nullable()
+    val socialId = varchar("social_id", 255).uniqueIndex().nullable()
+    val instanceId = varchar("instance_id", 255).uniqueIndex().nullable()
     val provider = enumerationByName("provider", 20, AuthProvider::class).nullable()
     val status = enumerationByName("status", 20, UserStatus::class).nullable()
     val type = enumerationByName("type", 20, UserType::class).default(UserType.Guest)
@@ -28,14 +29,15 @@ class UserDAO(
 ) : LongEntity(id) {
     companion object : LongEntityClass<UserDAO>(UsersTable)
 
-    val email by UsersTable.email
-    val username by UsersTable.username
-    val passwordHash by UsersTable.passwordHash
-    val socialId by UsersTable.socialId
-    val provider by UsersTable.provider
-    val status by UsersTable.status
-    val type by UsersTable.type
-    val createdAt by UsersTable.createdAt
-    val updatedAt by UsersTable.updatedAt
-    val deletedAt by UsersTable.deletedAt
+    var email by UsersTable.email
+    var name by UsersTable.name
+    var passwordHash by UsersTable.passwordHash
+    var socialId by UsersTable.socialId
+    var instanceId by UsersTable.instanceId
+    var provider by UsersTable.provider
+    var status by UsersTable.status
+    var type by UsersTable.type
+    var createdAt by UsersTable.createdAt
+    var updatedAt by UsersTable.updatedAt
+    var deletedAt by UsersTable.deletedAt
 }

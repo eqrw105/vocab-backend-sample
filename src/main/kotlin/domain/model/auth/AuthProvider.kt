@@ -1,4 +1,4 @@
-package domain.model
+package domain.model.auth
 
 enum class AuthProvider {
     Google,
