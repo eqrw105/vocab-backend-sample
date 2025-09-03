@@ -1,4 +1,4 @@
-package config
+package plugins.db
 
 import infrastructure.table.UsersTable
 import io.ktor.server.application.Application
