@@ -1,6 +1,7 @@
 package infrastructure.table
 
 import domain.model.auth.AuthProvider
+import domain.model.user.User
 import domain.model.user.UserStatus
 import domain.model.user.UserType
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
@@ -41,3 +42,19 @@ class UserDAO(
     var updatedAt by UsersTable.updatedAt
     var deletedAt by UsersTable.deletedAt
 }
+
+fun UserDAO.toUser(): User =
+    User(
+        id = id.value,
+        email = email,
+        name = name,
+        passwordHash = passwordHash,
+        socialId = socialId,
+        instanceId = instanceId,
+        provider = provider,
+        status = status,
+        type = type,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+        deletedAt = deletedAt,
+    )
