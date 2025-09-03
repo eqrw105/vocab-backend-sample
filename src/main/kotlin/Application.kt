@@ -3,6 +3,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import plugins.db.configureDatabases
+import plugins.exception.configureExceptionHandler
 import plugins.routing.configureRouting
 
 fun main(args: Array<String>) {
@@ -14,6 +15,7 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
+    configureExceptionHandler()
     configureRouting()
     configureDatabases()
 }
