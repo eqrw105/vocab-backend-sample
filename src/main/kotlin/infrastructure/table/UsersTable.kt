@@ -3,12 +3,12 @@ package infrastructure.table
 import domain.model.AuthProvider
 import domain.model.UserStatus
 import domain.model.UserType
-import java.time.LocalDateTime
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.LongIdTable
 import org.jetbrains.exposed.v1.dao.LongEntity
 import org.jetbrains.exposed.v1.dao.LongEntityClass
 import org.jetbrains.exposed.v1.javatime.datetime
+import java.time.LocalDateTime
 
 object UsersTable : LongIdTable("users") {
     val email = varchar("email", 255).uniqueIndex().nullable()
