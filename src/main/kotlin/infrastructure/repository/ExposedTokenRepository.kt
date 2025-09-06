@@ -5,11 +5,11 @@ import domain.port.TokenRepository
 import infrastructure.table.RefreshTokenDAO
 import infrastructure.table.RefreshTokensTable
 import infrastructure.table.toRefreshToken
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import java.time.Clock
 import java.time.Instant
 import java.util.UUID
-import org.jetbrains.exposed.v1.core.and
-import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 class ExposedTokenRepository(
     private val clock: Clock = Clock.systemUTC(),

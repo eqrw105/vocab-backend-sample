@@ -1,7 +1,7 @@
 package plugins.routing.security
 
-import io.ktor.server.auth.authenticate as ktorAuthenticate
 import io.ktor.server.routing.Route
+import io.ktor.server.auth.authenticate as ktorAuthenticate
 
 @JvmInline
 value class AuthName(

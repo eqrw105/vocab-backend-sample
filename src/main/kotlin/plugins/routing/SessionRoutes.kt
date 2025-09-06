@@ -13,8 +13,6 @@ import io.ktor.server.resources.post
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.application
-import kotlin.uuid.Uuid
-import kotlin.uuid.toJavaUuid
 import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 import plugins.routing.dto.request.SessionRefreshRequestDTO
@@ -24,6 +22,8 @@ import plugins.routing.security.appCheck
 import plugins.routing.security.principal.AppCheckPrincipal
 import plugins.routing.security.principal.PrivatePrincipal
 import plugins.routing.security.private
+import kotlin.uuid.Uuid
+import kotlin.uuid.toJavaUuid
 
 @Serializable
 @Resource("/v1/session")

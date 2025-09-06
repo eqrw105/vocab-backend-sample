@@ -1,5 +1,9 @@
 package domain.service
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.interfaces.Claim
 import domain.model.session.AccessTokenIssued
 import domain.model.session.DecodedToken
 import domain.model.session.ParsedRefresh
@@ -14,10 +18,6 @@ import java.util.UUID
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
-import com.auth0.jwt.exceptions.JWTVerificationException
-import com.auth0.jwt.interfaces.Claim
 
 class TokenService(
     secret: ByteArray,
