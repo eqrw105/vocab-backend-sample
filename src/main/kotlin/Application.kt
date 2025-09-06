@@ -6,6 +6,7 @@ import plugins.db.configureDatabases
 import plugins.di.configureDI
 import plugins.exception.configureExceptionHandler
 import plugins.routing.configureRouting
+import plugins.routing.security.configureAuthentication
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain
@@ -18,6 +19,7 @@ fun Application.module() {
     }
     configureDI()
     configureExceptionHandler()
+    configureAuthentication()
     configureRouting()
     configureDatabases()
 }
