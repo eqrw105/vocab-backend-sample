@@ -1,6 +1,7 @@
 package domain.service
 
 import domain.model.session.AccessTokenIssued
+import domain.model.session.ParsedRefresh
 import domain.model.session.RefreshTokenIssued
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -72,6 +73,31 @@ class TokenService(
             id = tokenId,
             secretHash = hash,
         )
+    }
+
+    fun parseRefreshToken(raw: String): ParsedRefresh? {
+        val parts = raw.split('.', limit = 2)
+        if (parts.size != 2) return null
+        val id = runCatching { UUID.fromString(parts[0]) }.getOrNull() ?: return null
+        return ParsedRefresh(id, parts[1])
+    }
+
+    fun hashRefreshSecret(secret: String): String = sha256Url(secret)
+
+    fun constantTimeEquals(
+        a: String,
+        b: String,
+    ): Boolean {
+        val ba = a.toByteArray(StandardCharsets.UTF_8)
+        val bb = b.toByteArray(StandardCharsets.UTF_8)
+        var r = 0
+        val n = maxOf(ba.size, bb.size)
+        for (i in 0 until n) {
+            val x = if (i < ba.size) ba[i] else 0
+            val y = if (i < bb.size) bb[i] else 0
+            r = r or (x.toInt() xor y.toInt())
+        }
+        return r == 0
     }
 
     private fun randomSecret(bytes: Int): String {
