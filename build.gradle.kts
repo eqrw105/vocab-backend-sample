@@ -1,5 +1,3 @@
-import com.diffplug.gradle.spotless.SpotlessExtension
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
@@ -16,11 +14,10 @@ application {
     mainClass = "io.ktor.server.netty.EngineMain"
 }
 
-extensions.configure<SpotlessExtension> {
-    val buildDirectory = layout.buildDirectory.asFileTree
+spotless {
     kotlin {
-        ktlint(libs.versions.ktlint.get())
-        target("**/*.kt", "**/*.kts")
+        val buildDirectory = layout.buildDirectory.asFileTree
+        ktlint()
         targetExclude(buildDirectory)
         trimTrailingWhitespace()
         endWithNewline()
