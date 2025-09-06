@@ -1,6 +1,7 @@
 package domain.service
 
 import domain.model.session.AccessTokenIssued
+import domain.model.session.DecodedToken
 import domain.model.session.ParsedRefresh
 import domain.model.session.RefreshTokenIssued
 import java.nio.charset.StandardCharsets
@@ -15,6 +16,8 @@ import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.interfaces.Claim
 
 class TokenService(
     secret: ByteArray,
@@ -22,6 +25,12 @@ class TokenService(
     private val clock: Clock = Clock.systemUTC(),
 ) {
     private val algorithm = Algorithm.HMAC256(secret)
+    private val verifier =
+        JWT
+            .require(algorithm)
+            .withIssuer(issuer)
+            .acceptLeeway(2) // 초 단위 시계 오차 허용
+            .build()
 
     fun issueAccessToken(
         subject: String,
@@ -59,6 +68,25 @@ class TokenService(
             expiresAt = exp.toEpochMilli(),
         )
     }
+
+    fun verifyAccessToken(token: String): DecodedToken? =
+        try {
+            val decoded = verifier.verify(token)
+            val subject = decoded.subject ?: return null
+            val exp = decoded.expiresAt?.time ?: return null
+            val claims =
+                decoded.claims
+                    .filterKeys { it != "iss" && it != "sub" && it != "exp" && it != "iat" && it != "jti" }
+                    .mapValues { (_, c) -> c.toPrimitive() }
+
+            DecodedToken(
+                subject = subject,
+                claims = claims,
+                expiresAt = exp,
+            )
+        } catch (e: JWTVerificationException) {
+            null
+        }
 
     fun issueRefreshToken(ttlSeconds: Long): RefreshTokenIssued {
         val now = Instant.now(clock)
@@ -110,6 +138,35 @@ class TokenService(
         val md = MessageDigest.getInstance("SHA-256")
         val digest = md.digest(input.toByteArray(StandardCharsets.UTF_8))
         return Base64.getUrlEncoder().withoutPadding().encodeToString(digest)
+    }
+
+    private fun Claim.toPrimitive(): Any? {
+        // 순서대로 시도하여 가장 자연스러운 원시 타입으로 반환
+        return try {
+            this.asBoolean()
+        } catch (_: Exception) {
+            null
+        }
+            ?: try {
+                this.asLong()
+            } catch (_: Exception) {
+                null
+            }
+            ?: try {
+                this.asInt()
+            } catch (_: Exception) {
+                null
+            }
+            ?: try {
+                this.asDouble()
+            } catch (_: Exception) {
+                null
+            }
+            ?: try {
+                this.asString()
+            } catch (_: Exception) {
+                null
+            }
     }
 
     companion object {
