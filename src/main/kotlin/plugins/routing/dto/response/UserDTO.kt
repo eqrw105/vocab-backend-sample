@@ -31,8 +31,6 @@ class UserDTO(
     val createdAt: LocalDateTime,
     @SerialName("updatedAt")
     val updatedAt: LocalDateTime,
-    @SerialName("deletedAt")
-    val deletedAt: LocalDateTime?,
 )
 
 fun User.toDTO() =
@@ -47,5 +45,4 @@ fun User.toDTO() =
         type = type,
         createdAt = createdAt.toKotlinLocalDateTime(),
         updatedAt = updatedAt.toKotlinLocalDateTime(),
-        deletedAt = deletedAt?.toKotlinLocalDateTime(),
     )

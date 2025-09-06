@@ -17,5 +17,4 @@ data class User(
     val type: UserType,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
-    val deletedAt: LocalDateTime?,
 )

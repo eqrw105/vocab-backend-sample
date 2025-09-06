@@ -17,12 +17,7 @@ class CreateGuestTokenUseCase(
         if (instanceId.isBlank()) throw ApiException.ValidationException("instanceId가 비어있습니다.")
 
         val existing = userRepository.getUserByInstanceId(instanceId)
-        val user =
-            if (existing != null && existing.deletedAt == null) {
-                existing
-            } else {
-                userRepository.createGuest(instanceId, UserStatus.Active, UserType.Guest)
-            }
+        val user = existing ?: userRepository.createGuest(instanceId, UserStatus.Active, UserType.Guest)
 
         val accessToken =
             tokenService.issueAccessToken(
