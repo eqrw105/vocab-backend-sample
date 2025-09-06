@@ -20,4 +20,9 @@ interface TokenRepository {
         newTokenHash: String,
         newExpiresAt: Long,
     ): Boolean
+
+    suspend fun revokeRefreshToken(
+        tokenId: UUID,
+        userId: Long,
+    ): Boolean
 }

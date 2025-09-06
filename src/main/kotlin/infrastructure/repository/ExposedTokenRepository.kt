@@ -5,11 +5,11 @@ import domain.port.TokenRepository
 import infrastructure.table.RefreshTokenDAO
 import infrastructure.table.RefreshTokensTable
 import infrastructure.table.toRefreshToken
-import org.jetbrains.exposed.v1.core.and
-import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import java.time.Clock
 import java.time.Instant
 import java.util.UUID
+import org.jetbrains.exposed.v1.core.and
+import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 class ExposedTokenRepository(
     private val clock: Clock = Clock.systemUTC(),
@@ -69,5 +69,19 @@ class ExposedTokenRepository(
                 .find { RefreshTokensTable.id eq newTokenId }
                 .limit(1)
                 .any()
+        }
+
+    override suspend fun revokeRefreshToken(
+        tokenId: UUID,
+        userId: Long,
+    ): Boolean =
+        transaction {
+            RefreshTokenDAO
+                .find {
+                    (RefreshTokensTable.id eq tokenId) and
+                        (RefreshTokensTable.userId eq userId)
+                }.limit(1)
+                .firstOrNull()
+                ?.delete() != null
         }
 }
