@@ -5,8 +5,10 @@ import domain.port.TokenRepository
 import infrastructure.table.RefreshTokenDAO
 import infrastructure.table.RefreshTokensTable
 import infrastructure.table.toRefreshToken
+import org.jetbrains.exposed.v1.core.and
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import java.time.Clock
+import java.time.Instant
 import java.util.UUID
 
 class ExposedTokenRepository(
@@ -36,5 +38,36 @@ class ExposedTokenRepository(
                     this.createdAt = clock.millis()
                     this.updatedAt = clock.millis()
                 }.toRefreshToken()
+        }
+
+    override suspend fun replaceRefreshToken(
+        userId: Long,
+        oldTokenId: UUID,
+        newTokenId: UUID,
+        newTokenHash: String,
+        newExpiresAt: Long,
+    ): Boolean =
+        transaction {
+            val now = Instant.now(clock).toEpochMilli()
+            RefreshTokenDAO
+                .find {
+                    (RefreshTokensTable.id eq oldTokenId) and
+                        (RefreshTokensTable.userId eq userId)
+                }.limit(1)
+                .firstOrNull()
+                ?.delete()
+
+            RefreshTokenDAO.new(newTokenId) {
+                this.userId = userId
+                this.tokenHash = newTokenHash
+                this.expiresAt = newExpiresAt
+                this.createdAt = now
+                this.updatedAt = now
+            }
+
+            RefreshTokenDAO
+                .find { RefreshTokensTable.id eq newTokenId }
+                .limit(1)
+                .any()
         }
 }

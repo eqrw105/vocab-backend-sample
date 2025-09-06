@@ -12,4 +12,12 @@ interface TokenRepository {
         tokenHash: String,
         expiresAt: Long,
     ): RefreshToken
+
+    suspend fun replaceRefreshToken(
+        userId: Long,
+        oldTokenId: UUID,
+        newTokenId: UUID,
+        newTokenHash: String,
+        newExpiresAt: Long,
+    ): Boolean
 }
