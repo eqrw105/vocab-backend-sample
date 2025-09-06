@@ -4,6 +4,8 @@ import domain.model.session.RefreshToken
 import java.util.UUID
 
 interface TokenRepository {
+    suspend fun getRefreshToken(tokenId: UUID): RefreshToken?
+
     suspend fun createRefreshToken(
         tokenId: UUID,
         userId: Long,
