@@ -1,5 +1,6 @@
 package plugins.di
 
+import application.di.applicationModule
 import domain.di.domainModule
 import infrastructure.network.di.networkModule
 import infrastructure.repository.di.repositoryModule
@@ -12,6 +13,7 @@ fun Application.configureDI() {
     install(Koin) {
         slf4jLogger()
         modules(
+            applicationModule,
             domainModule,
             networkModule,
             repositoryModule,
