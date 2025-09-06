@@ -1,7 +1,7 @@
 ktor:
   application:
     modules:
-      - application.ApplicationKt.module
+      - ApplicationKt.module
   deployment:
     port: $PORT
   database:
