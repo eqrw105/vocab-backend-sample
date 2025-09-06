@@ -22,7 +22,6 @@ object UsersTable : LongIdTable("users") {
     val type = enumerationByName("type", 20, UserType::class).default(UserType.Guest)
     val createdAt = datetime("created_at").default(LocalDateTime.now())
     val updatedAt = datetime("updated_at").default(LocalDateTime.now())
-    val deletedAt = datetime("deleted_at").nullable()
 }
 
 class UserDAO(
@@ -40,7 +39,6 @@ class UserDAO(
     var type by UsersTable.type
     var createdAt by UsersTable.createdAt
     var updatedAt by UsersTable.updatedAt
-    var deletedAt by UsersTable.deletedAt
 }
 
 fun UserDAO.toUser(): User =
@@ -56,5 +54,4 @@ fun UserDAO.toUser(): User =
         type = type,
         createdAt = createdAt,
         updatedAt = updatedAt,
-        deletedAt = deletedAt,
     )
