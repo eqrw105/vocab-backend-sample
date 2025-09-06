@@ -10,6 +10,15 @@ import infrastructure.table.toUser
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 
 class ExposedUserRepository : UserRepository {
+    override suspend fun getUser(userId: Long): User? =
+        transaction {
+            UserDAO
+                .find { UsersTable.id eq userId }
+                .limit(1)
+                .firstOrNull()
+                ?.toUser()
+        }
+
     override suspend fun getUserByInstanceId(instanceId: String): User? =
         transaction {
             UserDAO
