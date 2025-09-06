@@ -2,6 +2,7 @@ package application.di
 
 import application.usecase.CreateGuestTokenUseCase
 import application.usecase.RefreshTokenUseCase
+import application.usecase.RevokeTokenUseCase
 import application.usecase.VerifyAccessTokenUseCase
 import application.usecase.VerifyAppCheckTokenUseCase
 import org.koin.dsl.module
@@ -12,4 +13,5 @@ val applicationModule =
         single { CreateGuestTokenUseCase(get(), get(), get()) }
         single { RefreshTokenUseCase(get(), get(), get()) }
         single { VerifyAccessTokenUseCase(get()) }
+        single { RevokeTokenUseCase(get()) }
     }
