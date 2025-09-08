@@ -4,6 +4,7 @@ import infrastructure.table.RefreshTokensTable
 import infrastructure.table.UsersTable
 import infrastructure.table.WordCategoriesTable
 import infrastructure.table.WordCategoryMapsTable
+import infrastructure.table.WordSenseExampleTranslationsTable
 import infrastructure.table.WordSenseExamplesTable
 import infrastructure.table.WordSenseTranslationsTable
 import infrastructure.table.WordSensesTable
@@ -32,6 +33,7 @@ fun Application.configureDatabases() {
             WordSensesTable,
             WordSenseTranslationsTable,
             WordSenseExamplesTable,
+            WordSenseExampleTranslationsTable,
         )
     }
 }
