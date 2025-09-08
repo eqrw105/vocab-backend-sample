@@ -3,6 +3,7 @@ package plugins.db
 import infrastructure.table.RefreshTokensTable
 import infrastructure.table.UsersTable
 import infrastructure.table.WordCategoriesTable
+import infrastructure.table.WordsTable
 import io.ktor.server.application.Application
 import org.jetbrains.exposed.v1.jdbc.Database
 import org.jetbrains.exposed.v1.jdbc.SchemaUtils
@@ -22,6 +23,7 @@ fun Application.configureDatabases() {
             UsersTable,
             RefreshTokensTable,
             WordCategoriesTable,
+            WordsTable,
         )
     }
 }
