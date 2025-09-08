@@ -4,6 +4,7 @@ import infrastructure.table.RefreshTokensTable
 import infrastructure.table.UsersTable
 import infrastructure.table.WordCategoriesTable
 import infrastructure.table.WordCategoryMapsTable
+import infrastructure.table.WordSenseTranslationsTable
 import infrastructure.table.WordSensesTable
 import infrastructure.table.WordsTable
 import io.ktor.server.application.Application
@@ -28,6 +29,7 @@ fun Application.configureDatabases() {
             WordsTable,
             WordCategoryMapsTable,
             WordSensesTable,
+            WordSenseTranslationsTable,
         )
     }
 }
